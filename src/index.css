@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "IBM Plex Sans Arabic", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  :root {
+    /* Dark Mode Defaults */
+    --bg-app: #121212;
+    --bg-card: #1e1e1e;
+    --bg-input: #1e1e1e;
+    --bg-screen: #2d3748;
+    --bg-nav: #1a1a1a;
+    --text-primary: #ffffff;
+    --text-secondary: #e2e8f0;
+    --border-main: #2d3748;
+  }
+
+  html.light {
+    /* Light Mode */
+    --bg-app: #f7fafc;
+    --bg-card: #ffffff;
+    --bg-input: #f3f4f6;
+    --bg-screen: #edf2f7;
+    --bg-nav: #ffffff;
+    --text-primary: #2d3748;
+    --text-secondary: #4a5568;
+    --border-main: #e2e8f0;
+  }
+
+  html, body {
+    @apply h-full w-full overflow-hidden overscroll-none transition-colors duration-500;
+    background-color: var(--bg-app) !important;
+    color: var(--text-primary);
+    direction: rtl;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    touch-action: manipulation;
+  }
+
+  /* Force variable application to common utility patterns used in the app */
+  
+  /* Backgrounds */
+  .bg-\[\#0c0d0f\], .bg-\[\#121212\], .bg-\[\#0f1115\], .bg-gray-900 { background-color: var(--bg-app) !important; }
+  .bg-\[\#1e1e1e\], .bg-\[\#121417\], .bg-\[\#1a1c1e\], .bg-\[\#15181c\], .bg-white { background-color: var(--bg-card) !important; }
+  .bg-\[\#2a2a2a\], .bg-\[\#1a1e24\], .bg-gray-50, .bg-gray-100, .bg-\[\#1a1e24\] { background-color: var(--bg-input) !important; }
+  .bg-black\/40, .bg-\[\#2d3748\] { background-color: var(--bg-screen) !important; }
+  
+  /* Navigation & Headers */
+  nav, header, .bg-\[\#121212\], .bg-\[\#0f1115\], .bg-\[\#1a1a1a\] { background-color: var(--bg-nav) !important; }
+  
+  /* Borders */
+  .border-gray-800, .border-gray-100, .border-gray-200, .border-gray-700\/50, .border-gray-900\/50 { border-color: var(--border-main) !important; }
+  
+  /* Text */
+  .text-white, .text-gray-900, .text-gray-100 { color: var(--text-primary) !important; }
+  .text-gray-200, .text-gray-300, .text-gray-400, .text-gray-500, .text-gray-650, .text-gray-600, .text-gray-750, .text-gray-700, .text-gray-800, .text-gray-850 { color: var(--text-secondary) !important; }
+
+  /* Specific Interactive Component Logic */
+  .light .bg-blue-600\/10 { background-color: rgba(37, 99, 235, 0.05) !important; }
+  .light .bg-red-900\/15 { background-color: rgba(239, 68, 68, 0.08) !important; color: #dc2626 !important; }
+  .light .bg-gray-800\/40 { background-color: #f1f5f9 !important; color: #2d3748 !important; }
+  .light .hover\:bg-gray-800:hover { background-color: #edf2f7 !important; }
+
+  /* Navigation Item States */
+  nav .text-blue-400 {
+    text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+  }
+  .light nav .text-white\/60, .light nav .text-gray-500 { color: #718096 !important; }
+  .light nav .text-blue-400 { 
+    color: #2563eb !important;
+    text-shadow: none !important;
+  }
+
+  /* Prevent pull-to-refresh */
+  body {
+    overscroll-behavior-y: contain;
+  }
+}
+
+.custom-scrollbar::-webkit-scrollbar { width: 4px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { @apply bg-gray-600/40 rounded-full; }
+.custom-scrollbar::-webkit-scrollbar-thumb:hover { @apply bg-gray-600/60; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+.pt-safe { padding-top: env(safe-area-inset-top); }
+
+

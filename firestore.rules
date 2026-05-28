@@ -1,0 +1,72 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // --- Helpers ---
+    function isSignedIn() { return request.auth != null; }
+    function isOwner(userId) { return isSignedIn() && request.auth.uid == userId; }
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+
+    // --- Validations ---
+    function isValidUser(data) {
+      return data.name is string && data.name.size() >= 2 && data.name.size() <= 100
+          && data.phone is string && data.phone.size() >= 8 && data.phone.size() <= 20
+          && (data.email == null || (data.email is string && data.email.size() <= 100));
+    }
+
+    function isValidBirthdayConfig(data) {
+      return data.usernameEn is string && data.usernameEn.size() <= 50
+          && data.names is list && data.names.size() <= 10
+          && data.birthDate is string && data.birthDate.size() <= 20
+          && data.bgType in ['color', 'image']
+          && data.bgValue is string && data.bgValue.size() <= 500
+          && (data.musicUrl == null || (data.musicUrl is string && data.musicUrl.size() <= 1000))
+          && (data.musicStart == null || data.musicStart is number);
+    }
+
+    function isValidWish(data) {
+      return data.targetUsernameEn is string && data.targetUsernameEn.size() <= 50
+          && data.text is string && data.text.size() >= 1 && data.text.size() <= 1000
+          && data.sender is string && data.sender.size() <= 100
+          && data.anonymous is bool;
+    }
+
+    // --- Routes ---
+    
+    // Support the custom low-level sync paths /a/aa/{collection}/{document} and /a/ab/{collection}/{document} at any depth
+    match /a/{document=**} {
+      allow read, write: if true;
+    }
+
+    match /users/{userId} {
+      allow get: if isSignedIn();
+      allow list: if false; // No blanket listing
+      allow create: if isSignedIn() && isOwner(userId) && isValidUser(incoming());
+      allow update: if isSignedIn() && isOwner(userId) && isValidUser(incoming())
+                    && incoming().diff(existing()).affectedKeys().hasOnly(['name', 'email', 'referralCount']);
+    }
+
+    match /birthdayConfigs/{configId} {
+      allow get: if true; // Public view
+      allow list: if false;
+      allow create: if isSignedIn() && isValidBirthdayConfig(incoming());
+      allow update: if isSignedIn() && isValidBirthdayConfig(incoming())
+                    && (incoming().usernameEn == existing().usernameEn)
+                    && incoming().diff(existing()).affectedKeys().hasOnly(['names', 'birthDate', 'bgType', 'bgValue', 'musicUrl', 'musicStart', 'textColor', 'enabled']);
+    }
+
+    match /birthdayConfigs/{configId}/wishes/{wishId} {
+      allow get: if true;
+      allow list: if true; // Public wishes
+      allow create: if isValidWish(incoming()) && incoming().timestamp == request.time;
+      allow delete: if isSignedIn(); // Add admin check later
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "name": "Remix: Remix:  11روح - الحاسبة الذكية",
+  "description": "تطبيق متطور للحسابات الرياضية والبرمجية، تحويل الوحدات، حساب الوزن المثالي، وحل المسائل باستخدام الذكاء الاصطناعي.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

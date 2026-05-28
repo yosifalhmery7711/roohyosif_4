@@ -1,0 +1,39 @@
+{
+  "id": "app.rouh.standalone",
+  "name": "حاسبة روح الذكية",
+  "short_name": "روح",
+  "description": "روح - الحاسبة الذكية والمنقذ البرمجي",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c0d0f",
+  "theme_color": "#0c0d0f",
+  "orientation": "portrait",
+  "scope": "/",
+  "lang": "ar",
+  "dir": "rtl",
+  "permissions": [
+    "camera",
+    "notifications"
+  ],
+  "icons": [
+    {
+      "src": "https://lh3.googleusercontent.com/d/1p79NP1wGo5nAmDpGLV3xHvWbC1DJfZdZ",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://lh3.googleusercontent.com/d/1p79NP1wGo5nAmDpGLV3xHvWbC1DJfZdZ",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "المنقذ الذكي",
+      "url": "/?tab=ai",
+      "icons": [{ "src": "https://lh3.googleusercontent.com/d/1p79NP1wGo5nAmDpGLV3xHvWbC1DJfZdZ", "sizes": "192x192" }]
+    }
+  ]
+}

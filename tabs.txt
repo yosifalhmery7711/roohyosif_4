@@ -1,0 +1,10 @@
+961:                activeTab === tab.id ? "bg-white text-black shadow-lg" : "text-white/60 hover:text-white"
+965:              {(!isMini || activeTab === tab.id) && tab.label}
+972:            {activeTab === 'home' && (
+1020:            {activeTab === 'message' && (
+1043:            {activeTab === 'wishes' && (
+6342:              className={cn("p-2 rounded-xl transition-all hover:bg-gray-800", activeTab === 'history' ? "text-blue-400 bg-blue-600/10" : "text-gray-500")}
+6372:                  activeTab === tab.id 
+6377:                {activeTab === tab.id && (
+6485:                 className={cn("p-2 rounded-lg transition-colors", activeTab === 'history' ? "text-blue-400 bg-blue-600/10" : "text-gray-500")}
+6512:            const isActive = activeTab === tab.id;

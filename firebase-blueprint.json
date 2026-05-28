@@ -1,0 +1,71 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and registration data",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "phone": { "type": "string" },
+        "email": { "type": "string" },
+        "registeredAt": { "type": "string", "format": "date-time" },
+        "referralCount": { "type": "integer" }
+      },
+      "required": ["name", "phone"]
+    },
+    "BirthdayConfig": {
+      "title": "Birthday Configuration",
+      "description": "Professional birthday counter settings",
+      "type": "object",
+      "properties": {
+        "usernameEn": { "type": "string" },
+        "names": { 
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "ar": { "type": "string" },
+              "en": { "type": "string" }
+            }
+          }
+        },
+        "birthDate": { "type": "string" },
+        "bgType": { "type": "string", "enum": ["color", "image"] },
+        "bgValue": { "type": "string" },
+        "musicUrl": { "type": "string" },
+        "musicStart": { "type": "number" },
+        "textColor": { "type": "string" },
+        "enabled": { "type": "boolean" }
+      },
+      "required": ["usernameEn", "names"]
+    },
+    "Wish": {
+      "title": "Birthday Wish",
+      "description": "A wish sent to a user for their birthday",
+      "type": "object",
+      "properties": {
+        "targetUsernameEn": { "type": "string" },
+        "sender": { "type": "string" },
+        "text": { "type": "string" },
+        "anonymous": { "type": "boolean" },
+        "color": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["targetUsernameEn", "text"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles indexed by ID (phone or UID)"
+    },
+    "/birthdayConfigs/{configId}": {
+      "schema": "BirthdayConfig",
+      "description": "Configurations for birthday experiences"
+    },
+    "/birthdayConfigs/{configId}/wishes/{wishId}": {
+      "schema": "Wish",
+      "description": "Wishes for a specific birthday config"
+    }
+  }
+}

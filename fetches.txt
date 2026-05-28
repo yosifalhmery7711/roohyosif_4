@@ -1,0 +1,17 @@
+425:      const res = await fetch('/api/stored-images');
+464:      const res = await fetch('/api/delete-items', {
+549:      const res = await fetch('/api/download-multi', {
+575:      const res = await fetch(`/api/view-image/${folder}/${filename}`);
+803:                            const res = await fetch('/api/control/barcode', {
+1330:        const res = await fetch('/api/birthday/config', {
+1574:                          const res = await fetch('/api/birthday/upload', { 
+1615:                          const res = await fetch('/api/birthday/upload', { 
+1748:      const res = await fetch(`/api/birthday/config/${usernameEn}`);
+1762:      const res = await fetch('/api/birthday/wish', {
+2559:          await fetch('/api/save-capture', {
+4959:        const res = await fetch(`/api/user/config/${emailInput}`);
+4966:            await fetch('/api/user/config', {
+5344:          const res = await fetch(`/api/birthday/wishes/${birthdayProConfig.usernameEn}`);
+5377:      fetch(`/api/birthday/config/${birthdayProConfig.usernameEn}`)
+5433:      const response = await fetch(url);
+5577:        await fetch('/api/save-capture', {

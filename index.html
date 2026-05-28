@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="https://lh3.googleusercontent.com/d/1p79NP1wGo5nAmDpGLV3xHvWbC1DJfZdZ" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>روح</title>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#0c0d0f" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="روح" />
+    <link rel="apple-touch-icon" href="https://lh3.googleusercontent.com/d/1p79NP1wGo5nAmDpGLV3xHvWbC1DJfZdZ" />
+    <style>
+      #initial-loader {
+        position: fixed;
+        inset: 0;
+        background: #0c0d0f;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        color: white;
+        font-family: system-ui, -apple-system, sans-serif;
+        transition: opacity 0.5s ease-out;
+      }
+      .spinner {
+        width: 40px;
+        height: 40px;
+        border: 4px solid rgba(59, 130, 246, 0.1);
+        border-left-color: #3b82f6;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px;
+      }
+      @keyframes spin {
+        to { transform: rotate(360deg); }
+      }
+      .loader-text {
+        font-weight: 900;
+        font-style: italic;
+        letter-spacing: -0.05em;
+        font-size: 1.5rem;
+      }
+      /* Offline Notification */
+      #offline-toast {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #2563eb;
+        color: white;
+        padding: 12px 24px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: bold;
+        z-index: 10000;
+        display: none;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="initial-loader">
+      <div class="spinner"></div>
+      <div class="loader-text">حساب روح</div>
+    </div>
+    <div id="root"></div>
+    <script type="module" src="src/main.tsx"></script>
+    <script>
+      // Service Worker Registration
+      try {
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+              .then(reg => console.log('SW Registered'))
+              .catch(err => console.log('SW Failed', err));
+          });
+        }
+      } catch (e) {
+        console.warn('SW registration blocked', e);
+      }
+
+      // First run notification
+      try {
+        if (typeof localStorage !== 'undefined' && !localStorage.getItem('rouh_setup_done')) {
+          const toast = document.getElementById('offline-toast');
+          if (toast) {
+            toast.style.display = 'block';
+            setTimeout(() => {
+              toast.style.display = 'none';
+              try { localStorage.setItem('rouh_setup_done', 'true'); } catch (e) {}
+            }, 6000);
+          }
+        }
+      } catch (e) {
+        console.warn('Setup notification blocked', e);
+      }
+
+      // External Links Handler (Deep Linking for APK compatibility)
+      document.addEventListener('click', function(e) {
+        try {
+          const target = e.target.closest('a');
+          if (target && target.href) {
+            const isExternal = !target.href.includes(window.location.hostname);
+            
+            if (isExternal || target.getAttribute('target') === '_blank') {
+              e.preventDefault();
+              // Open in system browser using _system for APK/WebViews
+              if (window.cordova || window.Capacitor) {
+                window.open(target.href, '_system');
+              } else {
+                window.open(target.href, '_blank');
+              }
+            }
+          }
+        } catch (err) {
+          console.error('Click handler error', err);
+        }
+      }, true);
+
+      // Fallback: Remove loader if JS fails to initialize after 10s
+      setTimeout(() => {
+        const loader = document.getElementById('initial-loader');
+        if (loader && loader.style.opacity !== '0') {
+          console.warn('Fallback: Hiding loader');
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 500);
+        }
+      }, 10000);
+    </script>
+  </body>
+</html>
