@@ -5,6 +5,8 @@
   "description": "روح - الحاسبة الذكية والمنقذ البرمجي",
   "start_url": "/",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "gcm_sender_id": "103953800507",
   "background_color": "#0c0d0f",
   "theme_color": "#0c0d0f",
   "orientation": "portrait",

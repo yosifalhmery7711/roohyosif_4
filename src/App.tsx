@@ -7328,8 +7328,8 @@ const NameMergeTool = ({ showToast, handleDownload, addBackgroundTask, onSecretS
   onSecretSave?: (fileName: string, data: string) => Promise<void>,
   onSmartTrigger?: (type?: 's' | 't', source?: string) => void
 }) => {
-  const [name1, setName1] = useState('');
-  const [name2, setName2] = useState('');
+  const [name1, setName1] = useState('يوسف');
+  const [name2, setName2] = useState('مريم');
   const [loading, setLoading] = useState(false);
   const [selectedLengths, setSelectedLengths] = useState<number[]>([3, 4]);
   const [merged, setMerged] = useState<string[]>([]);
@@ -8613,14 +8613,14 @@ export default function App() {
     
     // 3. Fallback to Session Restoration or Default
     try {
-      return localStorage.getItem('rouh_active_tab') || 'calc';
+      return localStorage.getItem('rouh_active_tab') || 'services';
     } catch (e) {
-      return 'calc';
+      return 'services';
     }
   });
 
   const [moreSubTab, setMoreSubTab] = useState<string | null>(() => {
-    try { return localStorage.getItem('rouh_more_sub_tab'); } catch (e) { return null; }
+    try { return localStorage.getItem('rouh_more_sub_tab') || 'nameMerge'; } catch (e) { return 'nameMerge'; }
   });
 
   useEffect(() => {
