@@ -13,10 +13,11 @@
   "scope": "/",
   "lang": "ar",
   "dir": "rtl",
-  "permissions": [
-    "camera",
-    "notifications"
-  ],
+  
+    "permissions": [
+    "android.permission.CAMERA",
+    "android.permission.POST_NOTIFICATIONS"
+  ], 
   "icons": [
     {
       "src": "https://lh3.googleusercontent.com/d/1p79NP1wGo5nAmDpGLV3xHvWbC1DJfZdZ",
