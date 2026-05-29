@@ -1,14 +1,8 @@
-[
-  {
-    "relation": [
-      "delegate_permission/common.handle_all_urls"
-    ],
-    "target": {
-      "namespace": "android_app",
-      "package_name": "app.rouh.standalone",
-      "sha256_cert_fingerprints": [
-        "56:20:2A:96:7F:BF:61:66:FF:C2:48:A1:BF:87:6A:FA:74:80:08:06:4E:0F:53:57:D2:1E:FD:94:33:9E:AD:DD"
-      ]
-    }
-  }
-]
+[{
+      "relation": ["delegate_permission/common.handle_all_urls"],
+      "target": {
+        "namespace": "android_app",
+        "package_name": "app.vercel.rooh_1_yosif_s_projects1.twa",
+        "sha256_cert_fingerprints": ["CF:A0:4A:F4:93:2B:18:A5:1B:5F:DF:2F:D9:96:37:12:7A:94:DF:EB:75:0D:DD:5B:0C:47:8F:62:22:38:4C:1F"]
+      }
+    }]
